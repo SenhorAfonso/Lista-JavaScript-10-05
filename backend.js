@@ -19,7 +19,6 @@ Solicitar o nome, idade (18-75), sexo (M/F/O) de 6 pessoas e apresente:
 -------------------------------------
 */
 
-//Exercício dois, quant queer. Exercicio 6, porcentagem. Exercicio 4, mulher idosa. Nome e idade da pessoa mais jovem
 
 var nomes = []
 var sexos = []
@@ -60,8 +59,10 @@ function exercicio() {
     var idadeGeral = 0
     var maiorDeCinquenta = 0
     var pessoaMaisJovem = ''
+    var menorIdade = 0
     var quantCarac = 0
     var maiorNome = ''
+    var maiorIdadeFem = 0
 
     // VERIFICANDO OS ERROS
 
@@ -83,7 +84,7 @@ function exercicio() {
         quantErros += 1
         return;
     }
-
+    quantQueer + quantFem
     
     //A lista de nomes se organiza sozinha. Isso gera problemas no exercício 4 e 8.
     if(nomes.length < 6) {
@@ -115,11 +116,11 @@ function exercicio() {
             if(sexos[index] == 'M') {
                 somaIdadeMasc += idades[index]
             } else if (sexos[index] == 'F') {
-                if(idades[index] == idades.reduce((a, b) => Math.max(a, b), -Infinity)) {
+                if(idades[index] > maiorIdadeFem) {
+                    maiorIdadeFem = idades[index]
                     mulherMaisIdosa = nomes[index]
                 }
                 quantCarac += nomes[index].length
-
             }
 
             if(idades[index] > 50) {
@@ -131,12 +132,15 @@ function exercicio() {
                 maiorNome = nomes[index]
             }
 
+            
+
             idadeGeral += idades[index]
         }
 
         for(index = 0; index < nomes.length; index++) {
             if(idades[index] == idades.reduce((a,b) => Math.min(a,b), +Infinity)) {
                 pessoaMaisJovem = nomes[index]
+                menorIdade = idades[index]
                 break
             }
         }
@@ -147,17 +151,17 @@ function exercicio() {
             divResposta1.textContent = `${quantMasc} homens fizeram cadastro.`
         }
 
-        divResposta2.textContent = `${Math.round((quantQueer / nomes.length) * 100, 2)}% dos cadastros não são masculinos.`
+        divResposta2.textContent = `${Math.round(((quantQueer + quantFem) / nomes.length) * 100, 2)}% dos cadastros não são masculinos.`
 
         mediaIdadeHomens = isNaN(Math.round((somaIdadeMasc / quantMasc), 2)) ?  mediaIdadeHomens = 0 : mediaIdadeHomens = Math.round((somaIdadeMasc / quantMasc), 2)
         divResposta3.textContent = `A media de idade dos homens é ${mediaIdadeHomens}.`
 
-        divResposta4.textContent = `A mulher mais idosa se chama ${mulherMaisIdosa}.`
-        divResposta5.textContent = `A média geral das idades é ${idadeGeral / nomes.length}.`
-        divResposta6.textContent = `${maiorDeCinquenta / nomes.length}% das pessoas cadastradas têm mais de 50 anos.`
+        divResposta4.textContent = `A mulher mais idosa se chama ${mulherMaisIdosa} e tem ${maiorIdadeFem}.`
+        divResposta5.textContent = `A média geral das idades é ${Math.round((idadeGeral / nomes.length), 2)}.`
+        divResposta6.textContent = `${(maiorDeCinquenta / nomes.length) * 100}% das pessoas cadastradas têm mais de 50 anos.`
         divResposta7.textContent = `Você cometeu ${quantErros} erros ao entrar os dados.`
-        divResposta8.textContent = `A pessoa mais jovem cadastrada é ${pessoaMaisJovem}.`
-        divResposta9.textContent = `A média dos caracteres dos nomes femininos é ${quantCarac / quantFem}.`
+        divResposta8.textContent = `A pessoa mais jovem cadastrada é ${pessoaMaisJovem} e ela tem ${menorIdade} anos.`
+        divResposta9.textContent = `A média dos caracteres dos nomes femininos é ${Math.round((quantCarac / quantFem), 2)}.`
         divResposta10.textContent = `O menor nome, em termos alfabéticos, entrado cadastrado foi ${nomes.sort()[0]}.`
         divResposta11.textContent = `O nome de maior comprimento entrado foi ${maiorNome}.`
         
